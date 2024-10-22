@@ -2,7 +2,7 @@ package com.example.miok_info_app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.recyclerapp1.R
+import com.example.miok_info_app.R
 
 
 class MainActivity : AppCompatActivity() {

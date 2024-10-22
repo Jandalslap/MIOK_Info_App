@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.recyclerapp1'
+    namespace 'com.example.miok_info_app'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.recyclerapp1"
+        applicationId "com.example.miok_info_app"
         minSdk 28
         targetSdk 34
         versionCode 1
