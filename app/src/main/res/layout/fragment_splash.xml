@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5EDF3">
+
+    <!-- Placeholder for Icon -->
+    <ImageView
+        android:id="@+id/splash_icon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/miok_info_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" /> <!-- Move the icon up a third of the way from center -->
+
+    <!-- Placeholder for Pattern -->
+    <ImageView
+        android:id="@+id/splash_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/footer_pattern_white2" /> <!-- Ensure the image scales properly -->
+</RelativeLayout>

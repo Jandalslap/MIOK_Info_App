@@ -1,0 +1,28 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.miok_info_app.ui.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_disclaimerFragment"
+            app:destination="@id/disclaimerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/disclaimerFragment"
+        android:name="com.example.miok_info_app.ui.DisclaimerFragment"
+        android:label="DisclaimerFragment">
+        <action
+            android:id="@+id/action_disclaimerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.miok_info_app.ui.HomeFragment"
+        android:label="HomeFragment" />
+</navigation>
