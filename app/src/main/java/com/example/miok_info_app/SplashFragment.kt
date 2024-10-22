@@ -24,6 +24,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         // Simulate a delay for the splash screen and navigate to the disclaimer fragment
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_disclaimerFragment)

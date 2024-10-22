@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
     android:background="#E5EDF3">
 
+    <!-- Disclaimer Title -->
     <TextView
-        android:id="@+id/disclaimer_text"
+        android:id="@+id/disclaimer_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please accept the disclaimer"
-        android:textSize="18sp" />
+        android:text="Disclaimer"
+        android:textSize="24sp"
+        android:textColor="#004B8C"
+        android:fontFamily="@font/lalezar_regular"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp" />
 
-    <!-- Create a horizontal LinearLayout for the buttons -->
+    <!-- Disclaimer Text -->
+    <TextView
+        android:id="@+id/disclaimer_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This App is for a WINTEC Group Project Assessment only and is not affiliated with any company or government organisation."
+        android:textSize="18sp"
+        android:textColor="#004B8C"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="center"
+        android:layout_below="@id/disclaimer_title"
+        android:padding="24dp"
+        android:justificationMode="inter_word" />
+
+    <!-- Accept and Decline Buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_below="@id/disclaimer_text"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp">
 
         <Button
@@ -26,13 +44,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Accept"
-            android:layout_marginEnd="16dp"/> <!-- Add margin to space between buttons -->
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#004B8C" />
 
         <Button
             android:id="@+id/declineButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Decline" />
+            android:text="Decline"
+            android:backgroundTint="#004B8C" />
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Pattern Image at the bottom -->
+    <ImageView
+        android:id="@+id/splash_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/splash_screen_bg" />
+
+</RelativeLayout>
