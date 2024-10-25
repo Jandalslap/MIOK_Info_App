@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "163342983842",
+    "project_id": "miokinfoapp",
+    "storage_bucket": "miokinfoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163342983842:android:2fab31f1adb907fd76adfb",
+        "android_client_info": {
+          "package_name": "com.example.miok_info_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ_294WFzdURKCLzRYfdUwyp9BfXk29ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

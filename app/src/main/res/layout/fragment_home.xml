@@ -5,14 +5,136 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="#E5EDF3"
-    android:gravity="center">
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <TextView
         android:id="@+id/homeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main Page"
-        android:textSize="24sp" />
+        android:text="Hi, how are you today?"
+        android:textColor="#004B8C"
+        android:textSize="24sp"
+        android:layout_marginBottom="24dp" />
 
-    <!-- Add more UI elements here -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="8dp">
+
+        <Button
+            android:id="@+id/button_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="INFORMATION ABOUT ESCORTING"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_info"
+            android:drawablePadding="8dp"
+            android:padding="18dp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textStyle="bold"
+            android:background="@drawable/custom_button"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="8dp">
+
+        <Button
+            android:id="@+id/button_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PROCESS OF ESCORTING"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_process"
+            android:drawablePadding="8dp"
+            android:padding="18dp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textStyle="bold"
+            android:background="@drawable/custom_button"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="8dp">
+
+        <Button
+            android:id="@+id/button_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LEGAL RIGHTS OF PARENTS"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_legal_parents"
+            android:drawablePadding="8dp"
+            android:padding="18dp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textStyle="bold"
+            android:background="@drawable/custom_button"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="8dp">
+
+        <Button
+            android:id="@+id/button_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LEGAL RIGHTS OF CAREGIVERS"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/ic_parents_caregivers"
+            android:drawablePadding="8dp"
+            android:padding="23dp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textStyle="bold"
+            android:background="@drawable/custom_button"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        app:cardElevation="4dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        app:cardCornerRadius="8dp">
+
+        <Button
+            android:id="@+id/button_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TAKE QUIZ"
+            android:textColor="@android:color/white"
+            android:drawableStart="@drawable/miok_kiwi_only_scaled"
+            android:drawablePadding="8dp"
+            android:padding="4dp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textStyle="bold"
+            android:background="@drawable/light_blue_button"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

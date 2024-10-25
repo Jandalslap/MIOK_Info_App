@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Home Item -->
+    <item
+        android:id="@+id/action_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home_white" />
+
+    <item
+        android:id="@+id/space"
+        android:title=" "
+        android:icon="@android:color/transparent" />
+
+    <item
+        android:id="@+id/action_call_111"
+        android:title="CALL 111"
+        android:icon="@drawable/ic_phone" />
+
+    <item
+        android:id="@+id/action_emergency_hotlines"
+        android:title="EMERGENCY HOTLINES"
+        android:icon="@drawable/ic_browser" />
+
+    <item
+        android:id="@+id/action_oranga_tamariki"
+        android:title="ORANGA TAMARIKI"
+        android:icon="@drawable/ic_browser" />
+
+    <item
+        android:id="@+id/action_massey_university"
+        android:title="MASSEY UNIVERSITY"
+        android:icon="@drawable/ic_browser" />
+</menu>

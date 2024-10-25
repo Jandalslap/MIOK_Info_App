@@ -45,6 +45,9 @@
             android:layout_height="wrap_content"
             android:text="Accept"
             android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textColor="@color/white"
             android:backgroundTint="#004B8C" />
 
         <Button
@@ -52,6 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Decline"
+            android:textSize="18sp"
+            android:fontFamily="@font/lalezar_regular"
+            android:textColor="@color/white"
             android:backgroundTint="#004B8C" />
     </LinearLayout>
 

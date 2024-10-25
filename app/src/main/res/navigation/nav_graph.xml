@@ -25,4 +25,17 @@
         android:id="@+id/homeFragment"
         android:name="com.example.miok_info_app.ui.HomeFragment"
         android:label="HomeFragment" />
+
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.example.miok_info_app.ui.InformationFragment"
+        android:label="InformationFragment">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="content"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

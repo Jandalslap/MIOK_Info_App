@@ -1,0 +1,12 @@
+<!-- res/drawable/light_blue_button.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#3AA4EC" /> <!-- Light blue color -->
+            <corners android:radius="8dp" />
+            <stroke
+                android:width="2dp"
+                android:color="#FFFFFF" /> <!-- White border -->
+        </shape>
+    </item>
+</selector>
