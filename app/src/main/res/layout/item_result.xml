@@ -12,14 +12,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textColor="#004B8C"
         android:text="Question text"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <!-- Result Icon -->
     <ImageView
         android:id="@+id/resultIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:contentDescription="Result icon"
-        android:src="@drawable/ic_thumbs_up" />
+        android:src="@drawable/ic_quiz_correct" />
 </LinearLayout>

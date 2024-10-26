@@ -29,7 +29,7 @@ class ResultsAdapter(
 
         fun bind(question: DocumentSnapshot, isCorrect: Boolean) {
             questionText.text = question.getString("title")
-            resultIcon.setImageResource(if (isCorrect) R.drawable.ic_thumbs_up else R.drawable.ic_thumbs_down)
+            resultIcon.setImageResource(if (isCorrect) R.drawable.ic_quiz_correct else R.drawable.ic_quiz_incorrect)
         }
     }
 }
