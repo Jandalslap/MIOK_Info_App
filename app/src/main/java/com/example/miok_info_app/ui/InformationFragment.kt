@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.miok_info_app.R
+import com.example.miok_info_app.data.Document
 import com.example.miok_info_app.data.InformationRepository
 import com.example.miok_info_app.databinding.FragmentInformationBinding
+import com.example.miok_info_app.viewmodel.InformationViewModel
 import com.example.miok_info_app.viewmodel.InformationViewModelFactory
 
 class InformationFragment : Fragment() {
@@ -39,18 +41,18 @@ class InformationFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
-        // Get the document ID from arguments
-        val documentId = arguments?.getString("documentId") ?: return
+        // Get the document IDs from arguments (expecting a list)
+        val documentIds = arguments?.getStringArrayList("documentIds") ?: return
 
         // Observe the documents LiveData from the ViewModel
         viewModel.documents.observe(viewLifecycleOwner, Observer { documents ->
             adapter.submitList(documents)
-            // Show or hide the next button based on the documents count
-            binding.nextButton.visibility = if (documents.size > 1) View.VISIBLE else View.GONE
         })
 
-        // Fetch the specific document
-        viewModel.fetchDocuments(listOf(documentId)) // Pass the single document ID
+        // Fetch documents based on the list of document IDs
+        viewModel.fetchDocuments(documentIds)
+
+
     }
 
     override fun onDestroyView() {

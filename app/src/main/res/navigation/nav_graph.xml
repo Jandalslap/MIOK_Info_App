@@ -27,15 +27,17 @@
         android:label="HomeFragment" />
 
     <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.miok_info_app.ui.QuizFragment"
+        android:label="Quiz Fragment" >
+        <action
+            android:id="@+id/action_quizFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/informationFragment"
         android:name="com.example.miok_info_app.ui.InformationFragment"
-        android:label="InformationFragment">
-        <argument
-            android:name="title"
-            app:argType="string" />
-        <argument
-            android:name="content"
-            app:argType="string" />
-    </fragment>
+        android:label="Information Fragment" />
 
 </navigation>

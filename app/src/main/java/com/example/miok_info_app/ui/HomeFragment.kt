@@ -45,11 +45,10 @@ class HomeFragment : Fragment() {
         // Observe LiveData from the ViewModel
         viewModel.documentData.observe(viewLifecycleOwner, Observer { document ->
             if (document != null) {
-                // Navigate to InformationFragment with the specific document ID
-                val documentId = document.id // Assuming you are fetching the document with its ID
+                val documentId = document.id
                 findNavController().navigate(
                     R.id.informationFragment,
-                    bundleOf("documentId" to documentId) // Pass the document ID instead of title and content
+                    bundleOf("documentIds" to arrayListOf(documentId)) // Pass a list even if it's a single item
                 )
             } else {
                 Log.e("HomeFragment", "Document not found or error occurred")
@@ -71,6 +70,13 @@ class HomeFragment : Fragment() {
         binding.buttonFour.setOnClickListener {
             viewModel.fetchDocument("info_button_4")
         }
+        binding.quizButton.setOnClickListener {
+            findNavController().navigate(R.id.quizFragment)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // Clear binding reference to avoid memory leaks
     }
 }
-

@@ -28,4 +28,21 @@ class InformationRepository {
             null
         }
     }
+
+    // Function to get all quiz questions (documents with IDs like "quiz_question_1", "quiz_question_2", etc.)
+    suspend fun getQuizQuestions(): List<DocumentSnapshot> {
+        return try {
+            // Query for documents starting with "quiz_question_"
+            val querySnapshot = collectionRef
+                .whereGreaterThanOrEqualTo("__name__", "quiz_question_")
+                .whereLessThanOrEqualTo("__name__", "quiz_question_\uf8ff") // Unicode trick for string range
+                .get()
+                .await()
+            querySnapshot.documents
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        }
+    }
+
 }

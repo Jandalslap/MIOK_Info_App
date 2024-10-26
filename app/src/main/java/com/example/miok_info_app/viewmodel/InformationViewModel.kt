@@ -1,4 +1,4 @@
-package com.example.miok_info_app.ui
+package com.example.miok_info_app.viewmodel
 
 import androidx.lifecycle.*
 import com.example.miok_info_app.data.Document
@@ -24,4 +24,5 @@ class InformationViewModel(private val repository: InformationRepository) : View
             _documents.value = documentsList // Update LiveData with the list of documents
         }
     }
+
 }

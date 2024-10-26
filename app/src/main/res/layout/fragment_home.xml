@@ -124,7 +124,7 @@
         app:cardCornerRadius="8dp">
 
         <Button
-            android:id="@+id/button_five"
+            android:id="@+id/quizButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TAKE QUIZ"
