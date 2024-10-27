@@ -17,29 +17,30 @@ import com.example.miok_info_app.ui.DisclaimerFragment
 import com.example.miok_info_app.ui.SplashFragment
 import com.google.firebase.FirebaseApp
 
+// MainActivity serves as the entry point and handles navigation and Firebase initialization
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
+    private lateinit var drawerLayout: DrawerLayout // Drawer layout component for the navigation drawer
+    private lateinit var navView: NavigationView // Navigation view for handling drawer menu items
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main) // Set the main layout for this activity
 
-        // Initialize Firebase
+        // Initialize Firebase Services
         FirebaseApp.initializeApp(this)
 
-        // Setup DrawerLayout and NavigationView
+        // Setup DrawerLayout and NavigationView references
         drawerLayout = findViewById(R.id.drawer_layout)
         navView = findViewById(R.id.nav_view)
-        drawerLayout.setScrimColor(Color.TRANSPARENT) // Set transparent scrim color
+        drawerLayout.setScrimColor(Color.TRANSPARENT) // Set scrim color to transparent for drawer background
 
-        // Setup the NavHostFragment
+        // Setup NavHostFragment to manage fragment navigation
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         NavigationUI.setupWithNavController(navView, navHostFragment.navController)
 
-        // Set up Navigation Item Selection Listener
+        // Set up navigation item selection listener for the drawer menu
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_home -> {
@@ -48,9 +49,18 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.action_call_111 -> {
                     // Handle CALL 111 action here
+                    val phoneNumber = "0273408401" // The number to dial
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:$phoneNumber") // Use the "tel:" URI scheme
+                    }
+                    startActivity(intent) // Start the dialer activity
                 }
                 R.id.action_emergency_hotlines -> {
-                    // Handle EMERGENCY HOTLINES action here
+                    // Open Oranga Tamariki emergency hotline webpage
+                    val url = "https://www.orangatamariki.govt.nz/about-us/contact-us/"
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(url)
+                    startActivity(intent)
                 }
                 R.id.action_oranga_tamariki -> {
                     // Open Oranga Tamariki website
@@ -126,6 +136,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Shows or hides the navigation drawer based on whether the current fragment is SplashFragment or DisclaimerFragment.
     override fun onResume() {
         super.onResume()
         // Show or hide the navigation drawer based on the current fragment
@@ -137,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Closes the navigation drawer if it is open when navigating "up." (back)
     override fun onSupportNavigateUp(): Boolean {
         return drawerLayout.isDrawerOpen(GravityCompat.END).also {
             if (it) {
@@ -144,6 +156,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }

@@ -10,24 +10,24 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.miok_info_app.R
 
-
+// Fragment for displaying a splash screen with a delay before navigating to the disclaimer screen
 class SplashFragment : Fragment() {
 
+    // Inflate the splash screen layout when the fragment's view is created
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return inflater.inflate(R.layout.fragment_splash, container, false) // Inflate layout
     }
 
+    // Set up navigation from splash screen to disclaimer screen after a delay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        // Simulate a delay for the splash screen and navigate to the disclaimer fragment
+        // Use a handler to delay navigation by 3 seconds
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_disclaimerFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_disclaimerFragment) // Navigate to disclaimer
         }, 3000) // 3-second delay
     }
 }

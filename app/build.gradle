@@ -66,6 +66,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2" // or the latest version
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2" // for ViewModel support
+    implementation 'com.mikhaellopez:circularprogressbar:3.1.0'
 
     // Nav component dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:2.7.4"

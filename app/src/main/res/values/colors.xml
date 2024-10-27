@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="your_inactive_color">#CCCCCC</color>
-    <color name="your_question_color">#004B8C</color>
+    <color name="inactive_color">#CCCCCC</color> <!-- Quiz Question Progress Bar -->
+    <color name="question_color">#004B8C</color>
 </resources>

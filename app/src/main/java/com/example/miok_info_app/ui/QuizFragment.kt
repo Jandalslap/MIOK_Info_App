@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContentProviderCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,25 +22,30 @@ import com.example.miok_info_app.databinding.FragmentQuizBinding
 import com.example.miok_info_app.viewmodel.QuizViewModel
 import com.example.miok_info_app.viewmodel.QuizViewModelFactory
 import com.google.firebase.firestore.DocumentSnapshot
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
+// Fragment for managing the quiz interface and logic
 class QuizFragment : Fragment() {
-    private var _binding: FragmentQuizBinding? = null
-    private val binding get() = _binding!!
+    private var _binding: FragmentQuizBinding? = null // Binding object for accessing views
+    private val binding get() = _binding!! // Safe access to the binding object
 
+    // Set up QuizViewModel with the factory
     private val viewModel: QuizViewModel by viewModels {
-        QuizViewModelFactory(InformationRepository())
+        QuizViewModelFactory(InformationRepository()) // Provide the repository to the ViewModel
     }
 
     private lateinit var resultsAdapter: ResultsAdapter // Declare results adapter
 
+    // Inflate the layout for this fragment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentQuizBinding.inflate(inflater, container, false)
-        return binding.root
+        _binding = FragmentQuizBinding.inflate(inflater, container, false) // Inflate the layout
+        return binding.root // Return the root view
     }
 
+    // Called after the view has been created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,13 +58,7 @@ class QuizFragment : Fragment() {
 
         viewModel.correctAnswersCount.observe(viewLifecycleOwner, Observer { correctCount ->
             val totalCount = viewModel.totalQuestionsCount.value ?: 0
-
-            // Check if the correctCount is 0 and set the message accordingly
-            if (correctCount == 0) {
-                binding.resultsMessageText.text = "You got 0/$totalCount. Try Again?"
-            } else {
-                binding.resultsMessageText.text = "Well done! You got $correctCount/$totalCount correct!"
-            }
+            binding.resultsMessageText.text = "Quiz complete!\n\nYou answered\n $correctCount of $totalCount questions correctly."
         })
 
 
@@ -83,7 +83,7 @@ class QuizFragment : Fragment() {
             }
         })
 
-        // Button click listeners for Yes and No
+        // Button click listeners for Yes, No and Next buttons
         binding.yesButton.setOnClickListener {
             disableAnswerButtons()
             viewModel.answerQuestion(true)
@@ -104,6 +104,33 @@ class QuizFragment : Fragment() {
             binding.nextButton.visibility = View.GONE // Show the next button
             binding.feedbackText.visibility = View.GONE // Hide feedback text
             Log.d("QuizFragment", "Next button clicked")
+        }
+
+        // Set up the button click listener for See Questions button
+        binding.seeQuestionsButton.setOnClickListener {
+            // Hide the CircularProgressBar container
+            binding.circularProgressBarContainer.visibility = View.GONE
+            binding.seeQuestionsButton.visibility = View.GONE
+            binding.resultsRecyclerView.visibility = View.VISIBLE
+
+            // Update results in the adapter
+            val results = viewModel.results.value ?: emptyList()
+            resultsAdapter = ResultsAdapter(results)
+            binding.resultsRecyclerView.adapter = resultsAdapter
+
+            // Optionally, scroll to the top of the RecyclerView
+            binding.resultsRecyclerView.smoothScrollToPosition(0)
+
+            if (viewModel.latestCorrectCount == viewModel.totalQuestionsCount.value) {
+                binding.findOutMoreButton.visibility = View.GONE
+            } else
+            // Show the "Find Out More" button
+                binding.findOutMoreButton.visibility = View.VISIBLE
+
+            // Set up click listener for "Find Out More" button
+            binding.findOutMoreButton.setOnClickListener {
+                navigateToInformationFragment()
+            }
         }
 
         // Observe quiz completion
@@ -127,6 +154,7 @@ class QuizFragment : Fragment() {
         binding.noButton.isEnabled = true
     }
 
+    // Display the current question and possible answers
     private fun displayQuestion(question: DocumentSnapshot?) {
         question?.let {
             binding.questionText.text = it.getString("title") ?: "Question not available"
@@ -143,6 +171,7 @@ class QuizFragment : Fragment() {
         }
     }
 
+    // Display the quiz results at the end
     @SuppressLint("SuspiciousIndentation")
     private fun displayResults() {
         binding.yesButton.visibility = View.GONE // Hide the answer buttons
@@ -153,25 +182,34 @@ class QuizFragment : Fragment() {
         binding.nextButton.visibility = View.GONE // Hide the next button
         binding.resultsContainer.visibility = View.VISIBLE // Show results container
 
-        // Update results in the adapter
-        resultsAdapter = ResultsAdapter(viewModel.results.value ?: emptyList())
-        binding.resultsRecyclerView.adapter = resultsAdapter
 
+        //  Circular progress bar results graph
+        val circularProgressBar = binding.circularProgressBar
+        val progressText = binding.progressText
+
+        // Assuming you have the latest correct count and total questions count from your ViewModel
+        val latestCorrectCount = viewModel.latestCorrectCount
+        val totalQuestionsCount = viewModel.totalQuestionsCount.value
+
+        // Calculate the percentage with a check to prevent division by zero
+        val progress = if (totalQuestionsCount != null && totalQuestionsCount != 0) {
+            (latestCorrectCount.toFloat() / totalQuestionsCount * 100).toInt()
+        } else {
+            0
+        }
+        circularProgressBar.progress = progress.toFloat()
+        progressText.text = "$progress%"
+
+        // Retry Quiz button
         binding.retryQuizButton.setOnClickListener {
             viewModel.resetQuiz() // Call reset function in ViewModel
             resetUIForNewQuiz() // Reset UI elements to initial state
+            binding.circularProgressBarContainer.visibility = View.VISIBLE
+            binding.seeQuestionsButton.visibility = View.VISIBLE
+            binding.findOutMoreButton.visibility = View.GONE
+            binding.resultsRecyclerView.visibility = View.GONE
         }
 
-        if (viewModel.latestCorrectCount == 5) {
-            binding.findOutMoreButton.visibility = View.GONE
-        } else
-            // Show the "Find Out More" button
-            binding.findOutMoreButton.visibility = View.VISIBLE
-
-            // Set up click listener for "Find Out More" button
-            binding.findOutMoreButton.setOnClickListener {
-            navigateToInformationFragment()
-            }
     }
 
     // Helper function to reset UI elements for a new quiz
@@ -185,10 +223,10 @@ class QuizFragment : Fragment() {
         Log.d("QuizFragment", "Updating progress bar for question index: $currentQuestionIndex")
         for (i in 0 until binding.progressBar.childCount) {
             val view = binding.progressBar.getChildAt(i)
-            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.your_inactive_color)) // Inactive color
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.inactive_color)) // Inactive color
 
             if (i <= currentQuestionIndex) {
-                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.your_question_color)) // Active color
+                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.question_color)) // Active color
                 Log.d("QuizFragment", "Progress bar updated at index $i to active color.")
             }
         }
@@ -214,8 +252,9 @@ class QuizFragment : Fragment() {
         }
     }
 
+    // Clear the binding reference to avoid memory leaks
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Clear binding reference to avoid memory leaks
+        _binding = null // Set binding to null
     }
 }

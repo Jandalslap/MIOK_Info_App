@@ -4,24 +4,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:padding="16dp">
 
+    <!-- Title Text -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="28sp"
         android:textColor="#004B8C"
+        android:fontFamily="@font/lalezar_regular"
         android:layout_marginBottom="8dp"
+        android:paddingBottom="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <!-- Content Text -->
     <TextView
         android:id="@+id/contentTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"/>

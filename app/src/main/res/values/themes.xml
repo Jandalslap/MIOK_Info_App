@@ -15,6 +15,7 @@
 
     </style>
 
+    <!-- Navigation View style -->
     <style name="NavViewStyle" parent="Widget.Design.NavigationView">
         <item name="android:textColor">#FFFFFF</item>
         <item name="itemTextColor">@android:color/white</item>

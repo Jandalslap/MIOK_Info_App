@@ -28,7 +28,7 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
         }
     }
 
-    private val _totalQuestionsCount = MutableLiveData(1)
+    private val _totalQuestionsCount = MutableLiveData(0)
     val totalQuestionsCount: LiveData<Int> get() = _totalQuestionsCount
 
     // List to store each question and whether the answer was correct
@@ -60,12 +60,16 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
 
     fun loadQuestions() {
         viewModelScope.launch {
+            val fetchedQuestions = repository.getQuizQuestions()
             // Fetch questions from the repository
             _questions.value = repository.getQuizQuestions() // Ensure this method fetches the questions correctly
             Log.d("QuizViewModel", "Questions loaded: ${_questions.value?.size} questions retrieved.")
 
             // Initialize the current question index to 0
             _currentQuestionIndex.value = 0 // Start from the first question
+
+            // Update the total questions count
+            _totalQuestionsCount.value = fetchedQuestions.size
         }
     }
 
@@ -89,9 +93,6 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
                 _correctAnswersCount.value = (_correctAnswersCount.value ?: 0) + 1
             }
 
-            // Update total questions count
-            _totalQuestionsCount.value = (_totalQuestionsCount.value ?: 0) + 1
-
         }
     }
 
@@ -108,7 +109,6 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
     }
 
     fun resetQuiz() {
-        _totalQuestionsCount.value = 1
         _currentQuestionIndex.value = 0
         _correctAnswersCount.value = 0
         _results.value = emptyList() // Clear any existing results

@@ -5,26 +5,31 @@
         android:title="Home"
         android:icon="@drawable/ic_home_white" />
 
+    <!-- Space Item -->
     <item
         android:id="@+id/space"
         android:title=" "
         android:icon="@android:color/transparent" />
 
+    <!-- Call 111 -->
     <item
         android:id="@+id/action_call_111"
         android:title="CALL 111"
         android:icon="@drawable/ic_phone" />
 
+    <!-- Emergency Hotline Item -->
     <item
         android:id="@+id/action_emergency_hotlines"
         android:title="EMERGENCY HOTLINES"
         android:icon="@drawable/ic_browser" />
 
+    <!-- Oranga Tamariki Item -->
     <item
         android:id="@+id/action_oranga_tamariki"
         android:title="ORANGA TAMARIKI"
         android:icon="@drawable/ic_browser" />
 
+    <!-- Massey University Item -->
     <item
         android:id="@+id/action_massey_university"
         android:title="MASSEY UNIVERSITY"
