@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,12 +39,18 @@ class HomeFragment : Fragment() {
         return binding.root // Return the root view
     }
 
+
+
     // Called after the view has been created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Set up button listeners
         setupButtonListeners()
+
+        // Access the custom ActionBar and show the MIOK title
+        (activity as? AppCompatActivity)?.supportActionBar?.customView?.findViewById<View>(R.id.action_bar_title)?.visibility = View.VISIBLE
+
 
         // Observe LiveData from the ViewModel for document data
         viewModel.documentData.observe(viewLifecycleOwner, Observer { document ->
@@ -77,6 +84,13 @@ class HomeFragment : Fragment() {
         binding.quizButton.setOnClickListener {
             findNavController().navigate(R.id.quizFragment) // Navigate to the quiz fragment
         }
+    }
+
+    // Called when the fragment is visible to the user
+    override fun onResume() {
+        super.onResume()
+        // Hide the back arrow when on the home fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     // Clean up the binding reference when the view is destroyed

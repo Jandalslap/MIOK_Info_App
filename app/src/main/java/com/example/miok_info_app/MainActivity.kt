@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -90,7 +91,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.apply {
             displayOptions = androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
             customView = customActionBarView
-            setDisplayHomeAsUpEnabled(false) // Disable default back button
+            setDisplayHomeAsUpEnabled(false)
+
         }
 
         // Find the hamburger icon and set the click listener to open the drawer
@@ -154,6 +156,19 @@ class MainActivity : AppCompatActivity() {
             if (it) {
                 drawerLayout.closeDrawer(GravityCompat.END)
             }
+        }
+    }
+    // Handle the back arrow click
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> { // This is the home icon
+                // Navigate to the home fragment or activity
+                val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                val navController = navHostFragment.navController
+                navController.navigate(R.id.homeFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item) // Handle other menu item clicks
         }
     }
 

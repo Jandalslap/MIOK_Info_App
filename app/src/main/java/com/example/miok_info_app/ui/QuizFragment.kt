@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -48,6 +49,10 @@ class QuizFragment : Fragment() {
     // Called after the view has been created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Access the custom ActionBar and hide the MIOK title
+        (activity as? AppCompatActivity)?.supportActionBar?.customView?.findViewById<View>(R.id.action_bar_title)?.visibility = View.GONE
+
 
         // Observe feedback status
         viewModel.feedbackStatus.observe(viewLifecycleOwner, Observer { isCorrect ->
@@ -251,6 +256,13 @@ class QuizFragment : Fragment() {
             findNavController().navigate(R.id.action_quizFragment_to_informationFragment, bundle)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Show the back arrow when navigating to the Information fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
 
     // Clear the binding reference to avoid memory leaks
     override fun onDestroyView() {
