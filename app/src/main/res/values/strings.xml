@@ -6,4 +6,5 @@
     <string name="action_about">About</string>
     <string name="nav_home">Home</string>
     <string name="underline">____________________</string>
+    <string name="back">Back</string>
 </resources>
