@@ -29,5 +29,35 @@
         android:background="#004B8C"
         app:itemTextColor="@color/white"
         app:menu="@menu/drawer_menu"
-        style="@style/NavViewStyle" />
+        style="@style/NavViewStyle">
+
+        <!-- Footer with language toggle, positioned immediately after the menu items -->
+        <LinearLayout
+            android:id="@+id/drawer_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/language_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lalezar_regular"
+                android:text="Māori"
+                android:textSize="16sp" />
+
+            <Switch
+                android:id="@+id/language_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:checked="false"
+                android:thumbTint="@color/white"
+                android:trackTint="@color/white" />
+        </LinearLayout>
+
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

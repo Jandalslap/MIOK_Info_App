@@ -5,10 +5,25 @@ import com.example.miok_info_app.data.InformationRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val repository: InformationRepository) : ViewModel() {
+class HomeViewModel(
+    private val repository: InformationRepository,
+    private val sharedViewModel: SharedViewModel
+) : ViewModel() {
+
+    // Observe currentLanguage LiveData for updates and handle language changes
+    init {
+        sharedViewModel.currentLanguage.observeForever { language ->
+            onLanguageChanged(language)
+        }
+    }
+
+    private fun onLanguageChanged(language: String) {
+        // Perform actions based on the updated language if required
+    }
 
     private val _documentData = MutableLiveData<DocumentSnapshot?>()
     val documentData: LiveData<DocumentSnapshot?> get() = _documentData
+
 
     // Function to fetch a document by ID
     fun fetchDocument(documentId: String) {
@@ -18,7 +33,7 @@ class HomeViewModel(private val repository: InformationRepository) : ViewModel()
                 val document = repository.getDocumentById(documentId)
                 _documentData.value = document
             } catch (e: Exception) {
-                // Handle any errors (e.g., log or notify)
+                // Handle any errors
                 _documentData.value = null // Set to null if an error occurs
                 e.printStackTrace() // Optionally log the error
             }
@@ -26,13 +41,3 @@ class HomeViewModel(private val repository: InformationRepository) : ViewModel()
     }
 }
 
-// Factory for creating HomeViewModel with the repository as a dependency
-class HomeViewModelFactory(private val repository: InformationRepository) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

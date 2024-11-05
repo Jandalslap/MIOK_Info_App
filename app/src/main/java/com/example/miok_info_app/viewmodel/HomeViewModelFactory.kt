@@ -1,17 +1,16 @@
-package com.example.miok_info_app.viewmodel
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.miok_info_app.data.InformationRepository
-import com.example.miok_info_app.viewmodel.InformationViewModel
+import com.example.miok_info_app.viewmodel.HomeViewModel
+import com.example.miok_info_app.viewmodel.SharedViewModel
 
-class InformationViewModelFactory(
+class HomeViewModelFactory(
     private val repository: InformationRepository,
     private val sharedViewModel: SharedViewModel
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(InformationViewModel::class.java)) {
-            return InformationViewModel(repository, sharedViewModel) as T
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(repository, sharedViewModel) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

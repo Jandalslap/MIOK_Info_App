@@ -9,37 +9,47 @@ import com.example.miok_info_app.data.InformationRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 
-class QuizViewModel(private val repository: InformationRepository) : ViewModel() {
+class QuizViewModel(
+    private val repository: InformationRepository,
+    private val sharedViewModel: SharedViewModel
+) : ViewModel() {
 
-    private val _questions = MutableLiveData<List<DocumentSnapshot>>()
-    val questions: LiveData<List<DocumentSnapshot>> get() = _questions
+    init {
+        // Observe current language changes and reload questions accordingly
+        sharedViewModel.currentLanguage.observeForever { language ->
+            onLanguageChanged(language)
+        }
+        loadQuestions() // Load questions on initialization
+    }
 
-    private val _correctAnswersCount = MutableLiveData(0)
-    val correctAnswersCount: LiveData<Int> get() = _correctAnswersCount
+    // Handle changes to the selected language
+    private fun onLanguageChanged(language: String) {
+        loadQuestions() // Reload questions when the language changes
+    }
+
+    private val _questions = MutableLiveData<List<DocumentSnapshot>>() // LiveData to hold the list of questions
+    val questions: LiveData<List<DocumentSnapshot>> get() = _questions // Expose questions as LiveData
+
+    private val _correctAnswersCount = MutableLiveData(0) // LiveData to track correct answers count
+    val correctAnswersCount: LiveData<Int> get() = _correctAnswersCount // Expose correct answers count as LiveData
 
     // Public variable to store the latest correct count, updated each time `correctAnswersCount` changes
     var latestCorrectCount: Int = 0
-        private set
+        private set // Set the latest correct count, accessible but not modifiable externally
 
-    init {
-        // Observe correctAnswersCount to update latestCorrectCount each time it changes
-        correctAnswersCount.observeForever { newCorrectCount ->
-            latestCorrectCount = newCorrectCount
-        }
-    }
 
-    private val _totalQuestionsCount = MutableLiveData(0)
-    val totalQuestionsCount: LiveData<Int> get() = _totalQuestionsCount
+    private val _totalQuestionsCount = MutableLiveData(0) // LiveData to hold total number of questions
+    val totalQuestionsCount: LiveData<Int> get() = _totalQuestionsCount // Expose total questions count as LiveData
 
     // List to store each question and whether the answer was correct
-    private val _results = MutableLiveData<List<Pair<DocumentSnapshot, Boolean>>>()
-    val results: LiveData<List<Pair<DocumentSnapshot, Boolean>>> get() = _results
+    private val _results = MutableLiveData<List<Pair<DocumentSnapshot, Boolean>>>() // LiveData for storing results
+    val results: LiveData<List<Pair<DocumentSnapshot, Boolean>>> get() = _results // Expose results as LiveData
 
-    private val _currentQuestionIndex = MutableLiveData<Int>(0)
-    val currentQuestionIndex: LiveData<Int> = _currentQuestionIndex
+    private val _currentQuestionIndex = MutableLiveData<Int>(0) // LiveData for tracking the current question index
+    val currentQuestionIndex: LiveData<Int> = _currentQuestionIndex // Expose current question index as LiveData
 
     private val _feedbackStatus = MutableLiveData<Boolean?>() // Use Boolean to indicate correct/incorrect or null for no feedback
-    val feedbackStatus: LiveData<Boolean?> get() = _feedbackStatus
+    val feedbackStatus: LiveData<Boolean?> get() = _feedbackStatus // Expose feedback status as LiveData
 
     // LiveData that will hold the current question based on the current index
     val currentQuestion: LiveData<DocumentSnapshot?> = MediatorLiveData<DocumentSnapshot?>().apply {
@@ -51,26 +61,31 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
         }
     }
 
-    private val _quizCompleted = MutableLiveData(false)
-    val isQuizCompleted: LiveData<Boolean> get() = _quizCompleted
+    private val _quizCompleted = MutableLiveData(false) // LiveData to track quiz completion status
+    val isQuizCompleted: LiveData<Boolean> get() = _quizCompleted // Expose quiz completion status as LiveData
 
-    init {
-        loadQuestions()
-    }
 
+    // Function to load questions based on the current language
     fun loadQuestions() {
         viewModelScope.launch {
             val fetchedQuestions = repository.getQuizQuestions()
-            // Fetch questions from the repository
-            _questions.value = repository.getQuizQuestions() // Ensure this method fetches the questions correctly
-            Log.d("QuizViewModel", "Questions loaded: ${_questions.value?.size} questions retrieved.")
-
-            // Initialize the current question index to 0
-            _currentQuestionIndex.value = 0 // Start from the first question
-
-            // Update the total questions count
+            _questions.value = fetchedQuestions
             _totalQuestionsCount.value = fetchedQuestions.size
         }
+    }
+
+    // Helper method to get the title based on the current language
+    fun getQuestionTitle(question: DocumentSnapshot): String? {
+        val language = sharedViewModel.currentLanguage.value ?: "English"
+        val titleField = if (language == "Māori") "title_mr" else "title"
+        return question.getString(titleField)
+    }
+
+    // Helper method to get the content based on the current language
+    fun getQuestionContent(question: DocumentSnapshot): String? {
+        val language = sharedViewModel.currentLanguage.value ?: "English"
+        val contentField = if (language == "Māori") "content_mr" else "content"
+        return question.getString(contentField)
     }
 
     // Answer the current question and track correctness
@@ -95,9 +110,8 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
 
         }
     }
-
+    // Function to move to the next question or mark the quiz as complete
     fun goToNextQuestion() {
-        // Move to the next question or mark the quiz as complete
         val nextIndex = (_currentQuestionIndex.value ?: 0) + 1
         if (nextIndex < (_questions.value?.size ?: 0)) {
             _currentQuestionIndex.value = nextIndex
@@ -108,6 +122,7 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
         }
     }
 
+    // Function to reset quiz
     fun resetQuiz() {
         _currentQuestionIndex.value = 0
         _correctAnswersCount.value = 0
