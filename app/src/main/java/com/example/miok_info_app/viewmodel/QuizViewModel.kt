@@ -21,19 +21,20 @@ class QuizViewModel(
         loadQuestions() // Load questions on initialization
     }
 
+    // Handle changes to the selected language
     private fun onLanguageChanged(language: String) {
-        loadQuestions()
+        loadQuestions() // Reload questions when the language changes
     }
 
-    private val _questions = MutableLiveData<List<DocumentSnapshot>>()
-    val questions: LiveData<List<DocumentSnapshot>> get() = _questions
+    private val _questions = MutableLiveData<List<DocumentSnapshot>>() // LiveData to hold the list of questions
+    val questions: LiveData<List<DocumentSnapshot>> get() = _questions  // Expose questions as LiveData
 
-    private val _correctAnswersCount = MutableLiveData(0)
-    val correctAnswersCount: LiveData<Int> get() = _correctAnswersCount
+    private val _correctAnswersCount = MutableLiveData(0) // LiveData to track correct answers count
+    val correctAnswersCount: LiveData<Int> get() = _correctAnswersCount // Expose correct answers count as LiveData
 
     // Public variable to store the latest correct count, updated each time `correctAnswersCount` changes
     var latestCorrectCount: Int = 0
-        private set
+        private set // Set the latest correct count, accessible but not modifiable externally
 
     init {
         // Observe correctAnswersCount to update latestCorrectCount each time it changes
@@ -42,18 +43,18 @@ class QuizViewModel(
         }
     }
 
-    private val _totalQuestionsCount = MutableLiveData(0)
-    val totalQuestionsCount: LiveData<Int> get() = _totalQuestionsCount
+    private val _totalQuestionsCount = MutableLiveData(0) // LiveData to hold total number of questions
+    val totalQuestionsCount: LiveData<Int> get() = _totalQuestionsCount // Expose total questions count as LiveData
 
     // List to store each question and whether the answer was correct
-    private val _results = MutableLiveData<List<Pair<DocumentSnapshot, Boolean>>>()
-    val results: LiveData<List<Pair<DocumentSnapshot, Boolean>>> get() = _results
+    private val _results = MutableLiveData<List<Pair<DocumentSnapshot, Boolean>>>() // LiveData for storing results
+    val results: LiveData<List<Pair<DocumentSnapshot, Boolean>>> get() = _results // Expose results as LiveData
 
-    private val _currentQuestionIndex = MutableLiveData<Int>(0)
-    val currentQuestionIndex: LiveData<Int> = _currentQuestionIndex
+    private val _currentQuestionIndex = MutableLiveData<Int>(0) // LiveData for tracking the current question index
+    val currentQuestionIndex: LiveData<Int> = _currentQuestionIndex // Expose current question index as LiveData
 
     private val _feedbackStatus = MutableLiveData<Boolean?>() // Use Boolean to indicate correct/incorrect or null for no feedback
-    val feedbackStatus: LiveData<Boolean?> get() = _feedbackStatus
+    val feedbackStatus: LiveData<Boolean?> get() = _feedbackStatus // Expose feedback status as LiveData
 
     // LiveData that will hold the current question based on the current index
     val currentQuestion: LiveData<DocumentSnapshot?> = MediatorLiveData<DocumentSnapshot?>().apply {
@@ -65,8 +66,8 @@ class QuizViewModel(
         }
     }
 
-    private val _quizCompleted = MutableLiveData(false)
-    val isQuizCompleted: LiveData<Boolean> get() = _quizCompleted
+    private val _quizCompleted = MutableLiveData(false) // LiveData to track quiz completion status
+    val isQuizCompleted: LiveData<Boolean> get() = _quizCompleted // Expose quiz completion status as LiveData
 
 
     // Function to load questions based on the current language
@@ -115,6 +116,7 @@ class QuizViewModel(
         }
     }
 
+    // Function to move to the next question or mark the quiz as complete
     fun goToNextQuestion() {
         // Move to the next question or mark the quiz as complete
         val nextIndex = (_currentQuestionIndex.value ?: 0) + 1
@@ -127,6 +129,7 @@ class QuizViewModel(
         }
     }
 
+    // Function to reset quiz
     fun resetQuiz() {
         _currentQuestionIndex.value = 0
         _correctAnswersCount.value = 0
