@@ -13,7 +13,7 @@
         android:id="@+id/homeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hi, how are you today?"
+        android:text="@string/homeTextView"
         android:textColor="#004B8C"
         android:textSize="24sp"
         android:layout_marginBottom="24dp" />
@@ -37,10 +37,10 @@
             android:drawablePadding="20dp"
             android:fontFamily="@font/lalezar_regular"
             android:padding="10dp"
-            android:text="INFORMATION ABOUT ESCORTING"
+            android:text="@string/button_one"
             android:textAlignment="textStart"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </androidx.cardview.widget.CardView>
 
@@ -58,7 +58,7 @@
             android:id="@+id/button_two"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PROCESS OF ESCORTING"
+            android:text="@string/button_two"
             android:textColor="@android:color/white"
             android:drawableStart="@drawable/ic_process"
             android:drawablePadding="20dp"
@@ -67,7 +67,7 @@
             android:fontFamily="@font/lalezar_regular"
             android:textStyle="bold"
             android:background="@drawable/custom_button"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
 
     <!-- Card for Information Button 3 -->
@@ -84,7 +84,7 @@
             android:id="@+id/button_three"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LEGAL RIGHTS OF PARENTS"
+            android:text="@string/button_three"
             android:textColor="@android:color/white"
             android:drawableStart="@drawable/ic_legal_parents"
             android:drawablePadding="20dp"
@@ -93,7 +93,7 @@
             android:fontFamily="@font/lalezar_regular"
             android:textStyle="bold"
             android:background="@drawable/custom_button"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
 
     <!-- Card for Information Button 4 -->
@@ -110,7 +110,7 @@
             android:id="@+id/button_four"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LEGAL RIGHTS OF CAREGIVERS"
+            android:text="@string/button_four"
             android:textColor="@android:color/white"
             android:drawableStart="@drawable/ic_parents_caregivers"
             android:drawablePadding="20dp"
@@ -119,7 +119,7 @@
             android:fontFamily="@font/lalezar_regular"
             android:textStyle="bold"
             android:background="@drawable/custom_button"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
 
     <!-- Card for Information Button 5 (Quiz) -->
@@ -129,15 +129,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="16dp"
         app:cardElevation="4dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
         app:cardCornerRadius="10dp">
 
         <Button
             android:id="@+id/quizButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TAKE QUIZ"
+            android:text="@string/quizButton"
             android:textColor="@android:color/white"
             android:drawableStart="@drawable/miok_kiwi_only"
             android:drawablePadding="20dp"

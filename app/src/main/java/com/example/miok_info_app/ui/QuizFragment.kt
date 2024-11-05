@@ -12,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,20 +24,26 @@ import com.example.miok_info_app.data.InformationRepository
 import com.example.miok_info_app.databinding.FragmentQuizBinding
 import com.example.miok_info_app.viewmodel.QuizViewModel
 import com.example.miok_info_app.viewmodel.QuizViewModelFactory
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 // Fragment for managing the quiz interface and logic
 class QuizFragment : Fragment() {
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val quizViewModel: QuizViewModel by viewModels {
+        QuizViewModelFactory(InformationRepository(), sharedViewModel)
+    }
+
     private var _binding: FragmentQuizBinding? = null // Binding object for accessing views
     private val binding get() = _binding!! // Safe access to the binding object
 
-    // Set up QuizViewModel with the factory
-    private val viewModel: QuizViewModel by viewModels {
-        QuizViewModelFactory(InformationRepository()) // Provide the repository to the ViewModel
-    }
-
     private lateinit var resultsAdapter: ResultsAdapter // Declare results adapter
+
+    private var lastQuizCompletionMessage: String? = null
+
+    // Store the last feedback status to re-display when language changes
+    private var lastFeedbackStatus: Boolean? = null
 
     // Inflate the layout for this fragment
     override fun onCreateView(
@@ -50,27 +58,62 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up the results RecyclerView with the current language
+        val currentLanguage = sharedViewModel.currentLanguage.value ?: "English"
+        resultsAdapter = ResultsAdapter(emptyList(), currentLanguage)
+        binding.resultsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.resultsRecyclerView.adapter = resultsAdapter
+
         // Access the custom ActionBar and hide the MIOK title
         (activity as? AppCompatActivity)?.supportActionBar?.customView?.findViewById<View>(R.id.action_bar_title)?.visibility = View.GONE
 
 
         // Observe feedback status
-        viewModel.feedbackStatus.observe(viewLifecycleOwner, Observer { isCorrect ->
+        quizViewModel.feedbackStatus.observe(viewLifecycleOwner, Observer { isCorrect ->
             isCorrect?.let {
+                lastFeedbackStatus = it // Store the last feedback status
                 displayFeedback(it) // Call displayFeedback with the result
             }
         })
 
-        viewModel.correctAnswersCount.observe(viewLifecycleOwner, Observer { correctCount ->
-            val totalCount = viewModel.totalQuestionsCount.value ?: 0
-            binding.resultsMessageText.text = "Quiz complete!\n\nYou answered\n $correctCount of $totalCount questions correctly."
+        // Observe currentLanguage LiveData for updates
+        sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
+            updateStrings(language) // Update the UI strings based on the new language
+
+            // Update feedback based on the last feedback status
+            lastFeedbackStatus?.let {
+                displayFeedback(it) // Re-display the last feedback message
+            }
+
+            // Get current quiz statistics
+            val correctCount = quizViewModel.correctAnswersCount.value ?: 0
+            val totalCount = quizViewModel.totalQuestionsCount.value ?: 0
+
+            // Update the quiz completion message and hide feedback
+            updateQuizCompletionMessage(correctCount, totalCount)
+            binding.feedbackText.visibility = View.GONE
+
+            // Re-fetch results based on the current language
+            quizViewModel.results.value?.let { results ->
+                updateResultsAdapter(language, results) // Update the results adapter with the new language
+            }
+        }
+
+
+        // Observe correct answers count to update quiz completion message
+        quizViewModel.correctAnswersCount.observe(viewLifecycleOwner, Observer { correctCount ->
+            val totalCount = quizViewModel.totalQuestionsCount.value ?: 0
+
+            // Create message based on the current language
+            updateQuizCompletionMessage(correctCount, totalCount)
         })
 
 
-        // Set up the results RecyclerView
-        resultsAdapter = ResultsAdapter(emptyList())
-        binding.resultsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.resultsRecyclerView.adapter = resultsAdapter
+        // Observe results from QuizViewModel
+        quizViewModel.results.observe(viewLifecycleOwner) { results ->
+            updateResultsAdapter(sharedViewModel.currentLanguage.value ?: "English", results)
+        }
+
 
         // Initially hide the answer container
         binding.answerContainer.visibility = View.GONE
@@ -79,32 +122,32 @@ class QuizFragment : Fragment() {
 
         binding.nextButton.visibility = View.GONE // Hide the next button
 
-        viewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
+        quizViewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
             if (question != null) {
-                Log.d("QuizFragment", "Current question: ${question.getString("title")}")
-                displayQuestion(question)
+                displayQuestion(question) // Pass the DocumentSnapshot directly
             } else {
                 Log.d("QuizFragment", "Current question is null")
             }
         })
 
+
         // Button click listeners for Yes, No and Next buttons
         binding.yesButton.setOnClickListener {
             disableAnswerButtons()
-            viewModel.answerQuestion(true)
+            quizViewModel.answerQuestion(true)
             binding.answerContainer.visibility = View.VISIBLE // Show the answer container
             binding.nextButton.visibility = View.VISIBLE // Show the next button
             Log.d("QuizFragment", "Yes button clicked")
         }
         binding.noButton.setOnClickListener {
             disableAnswerButtons()
-            viewModel.answerQuestion(false)
+            quizViewModel.answerQuestion(false)
             binding.answerContainer.visibility = View.VISIBLE // Show the answer container
             binding.nextButton.visibility = View.VISIBLE // Show the next button
             Log.d("QuizFragment", "No button clicked")
         }
         binding.nextButton.setOnClickListener {
-            viewModel.goToNextQuestion()
+            quizViewModel.goToNextQuestion()
             binding.answerContainer.visibility = View.GONE // Show the answer container
             binding.nextButton.visibility = View.GONE // Show the next button
             binding.feedbackText.visibility = View.GONE // Hide feedback text
@@ -118,15 +161,10 @@ class QuizFragment : Fragment() {
             binding.seeQuestionsButton.visibility = View.GONE
             binding.resultsRecyclerView.visibility = View.VISIBLE
 
-            // Update results in the adapter
-            val results = viewModel.results.value ?: emptyList()
-            resultsAdapter = ResultsAdapter(results)
-            binding.resultsRecyclerView.adapter = resultsAdapter
-
             // Optionally, scroll to the top of the RecyclerView
             binding.resultsRecyclerView.smoothScrollToPosition(0)
 
-            if (viewModel.latestCorrectCount == viewModel.totalQuestionsCount.value) {
+            if (quizViewModel.latestCorrectCount == quizViewModel.totalQuestionsCount.value) {
                 binding.findOutMoreButton.visibility = View.GONE
             } else
             // Show the "Find Out More" button
@@ -139,14 +177,33 @@ class QuizFragment : Fragment() {
         }
 
         // Observe quiz completion
-        viewModel.isQuizCompleted.observe(viewLifecycleOwner, Observer { completed ->
+        quizViewModel.isQuizCompleted.observe(viewLifecycleOwner, Observer { completed ->
             if (completed) {
                 displayResults()
             }
         })
 
         // Load questions from the database
-        viewModel.loadQuestions()
+        quizViewModel.loadQuestions()
+    }
+
+    // Helper function to update quiz completion message
+    private fun updateQuizCompletionMessage(correctCount: Int, totalCount: Int) {
+        val message = if (sharedViewModel.currentLanguage.value == "Māori") {
+            "Kua oti te whakamātautau!\n\nI whakautu koe\n $correctCount o $totalCount pātai i te tika."
+        } else {
+            "Quiz complete!\n\nYou answered\n $correctCount of $totalCount questions correctly."
+        }
+
+        lastQuizCompletionMessage = message // Store the last message
+        binding.resultsMessageText.text = message // Update the message on the screen
+    }
+
+    private fun updateResultsAdapter(language: String, results: List<Pair<DocumentSnapshot, Boolean>>) {
+        // Assuming that the ResultsAdapter takes care of displaying the titles in the correct language
+        resultsAdapter = ResultsAdapter(results, language)
+        binding.resultsRecyclerView.adapter = resultsAdapter
+        resultsAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
     }
 
     private fun disableAnswerButtons() {
@@ -162,14 +219,16 @@ class QuizFragment : Fragment() {
     // Display the current question and possible answers
     private fun displayQuestion(question: DocumentSnapshot?) {
         question?.let {
-            binding.questionText.text = it.getString("title") ?: "Question not available"
+            // Get the language-specific title and content using helper methods from QuizViewModel
+            val title = quizViewModel.getQuestionTitle(it) ?: "Question not available"
+            val content = quizViewModel.getQuestionContent(it) ?: "Content not available"
 
-            // Get the content from the question and bind it to answerContentText
-            val answerContent = it.getString("content") ?: "Content not available"
-            binding.answerContentText.text = answerContent
+            // Set the title and content to the UI elements
+            binding.questionText.text = title
+            binding.answerContentText.text = content
 
-            // Update progress bar
-            val currentQuestionIndex = viewModel.currentQuestionIndex.value ?: 0
+            // Update the progress bar
+            val currentQuestionIndex = quizViewModel.currentQuestionIndex.value ?: 0
             updateProgressBar(currentQuestionIndex)
 
             enableAnswerButtons()
@@ -193,8 +252,8 @@ class QuizFragment : Fragment() {
         val progressText = binding.progressText
 
         // Assuming you have the latest correct count and total questions count from your ViewModel
-        val latestCorrectCount = viewModel.latestCorrectCount
-        val totalQuestionsCount = viewModel.totalQuestionsCount.value
+        val latestCorrectCount = quizViewModel.latestCorrectCount
+        val totalQuestionsCount = quizViewModel.totalQuestionsCount.value
 
         // Calculate the percentage with a check to prevent division by zero
         val progress = if (totalQuestionsCount != null && totalQuestionsCount != 0) {
@@ -207,7 +266,7 @@ class QuizFragment : Fragment() {
 
         // Retry Quiz button
         binding.retryQuizButton.setOnClickListener {
-            viewModel.resetQuiz() // Call reset function in ViewModel
+            quizViewModel.resetQuiz() // Call reset function in ViewModel
             resetUIForNewQuiz() // Reset UI elements to initial state
             binding.circularProgressBarContainer.visibility = View.VISIBLE
             binding.seeQuestionsButton.visibility = View.VISIBLE
@@ -237,15 +296,24 @@ class QuizFragment : Fragment() {
         }
     }
 
+    // Function to display feedback
     private fun displayFeedback(isCorrect: Boolean) {
-        val feedbackMessage = if (isCorrect) "Correct!" else "Incorrect"
-        binding.feedbackText.text = feedbackMessage
+        val currentLanguage = sharedViewModel.currentLanguage.value ?: "English"
+        val feedbackMessage = when {
+            isCorrect && currentLanguage == "Māori" -> "Tika!" // Correct in Māori
+            isCorrect -> "Correct!" // Correct in English
+            !isCorrect && currentLanguage == "Māori" -> "Hē!" // Incorrect in Māori
+            else -> "Incorrect" // Incorrect in English
+        }
+
+        binding.feedbackText.text = feedbackMessage // Set the feedback message
         binding.feedbackText.visibility = View.VISIBLE // Make sure the feedback text is visible
-        Log.d("QuizFragment", "Feedback displayed: $feedbackMessage")
+        Log.d("QuizFragment", "Feedback displayed: $feedbackMessage") // Log the feedback
     }
 
+    // Function to navigate to the Information Fragment to view quiz questions and answers
     private fun navigateToInformationFragment() {
-        val incorrectQuestions = viewModel.results.value?.filter { !it.second }?.map { it.first }
+        val incorrectQuestions = quizViewModel.results.value?.filter { !it.second }?.map { it.first }
 
         // If there are incorrect questions, navigate to InformationFragment
         if (!incorrectQuestions.isNullOrEmpty()) {
@@ -268,5 +336,59 @@ class QuizFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Set binding to null
+    }
+
+    // Function change textView language
+    private fun updateStrings(language: String) {
+        val context = requireContext()
+        val isMaori = language == "Māori"
+
+        binding.yesButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "yesButton_mr" else "yesButton",
+                "string",
+                context.packageName
+            )
+        )
+
+        binding.noButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "noButton_mr" else "noButton",
+                "string",
+                context.packageName
+            )
+        )
+
+        binding.nextButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "nextButton_mr" else "nextButton",
+                "string",
+                context.packageName
+            )
+        )
+
+        binding.seeQuestionsButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "seeQuestionsButton_mr" else "seeQuestionsButton",
+                "string",
+                context.packageName
+            )
+        )
+
+        binding.findOutMoreButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "findOutMoreButton_mr" else "findOutMoreButton",
+                "string",
+                context.packageName
+            )
+        )
+
+        binding.retryQuizButton.text = context.getString(
+            context.resources.getIdentifier(
+                if (isMaori) "retryQuizButton_mr" else "retryQuizButton",
+                "string",
+                context.packageName
+            )
+        )
     }
 }

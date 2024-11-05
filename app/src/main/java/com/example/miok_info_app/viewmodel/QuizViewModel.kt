@@ -9,7 +9,21 @@ import com.example.miok_info_app.data.InformationRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 
-class QuizViewModel(private val repository: InformationRepository) : ViewModel() {
+class QuizViewModel(
+    private val repository: InformationRepository,
+    private val sharedViewModel: SharedViewModel
+) : ViewModel() {
+
+    init {
+        sharedViewModel.currentLanguage.observeForever { language ->
+            onLanguageChanged(language)
+        }
+        loadQuestions() // Load questions on initialization
+    }
+
+    private fun onLanguageChanged(language: String) {
+        loadQuestions()
+    }
 
     private val _questions = MutableLiveData<List<DocumentSnapshot>>()
     val questions: LiveData<List<DocumentSnapshot>> get() = _questions
@@ -54,23 +68,28 @@ class QuizViewModel(private val repository: InformationRepository) : ViewModel()
     private val _quizCompleted = MutableLiveData(false)
     val isQuizCompleted: LiveData<Boolean> get() = _quizCompleted
 
-    init {
-        loadQuestions()
-    }
 
+    // Function to load questions based on the current language
     fun loadQuestions() {
         viewModelScope.launch {
             val fetchedQuestions = repository.getQuizQuestions()
-            // Fetch questions from the repository
-            _questions.value = repository.getQuizQuestions() // Ensure this method fetches the questions correctly
-            Log.d("QuizViewModel", "Questions loaded: ${_questions.value?.size} questions retrieved.")
-
-            // Initialize the current question index to 0
-            _currentQuestionIndex.value = 0 // Start from the first question
-
-            // Update the total questions count
+            _questions.value = fetchedQuestions
             _totalQuestionsCount.value = fetchedQuestions.size
         }
+    }
+
+    // Helper method to get the title based on the current language
+    fun getQuestionTitle(question: DocumentSnapshot): String? {
+        val language = sharedViewModel.currentLanguage.value ?: "English"
+        val titleField = if (language == "Māori") "title_mr" else "title"
+        return question.getString(titleField)
+    }
+
+    // Helper method to get the content based on the current language
+    fun getQuestionContent(question: DocumentSnapshot): String? {
+        val language = sharedViewModel.currentLanguage.value ?: "English"
+        val contentField = if (language == "Māori") "content_mr" else "content"
+        return question.getString(contentField)
     }
 
     // Answer the current question and track correctness

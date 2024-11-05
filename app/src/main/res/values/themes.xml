@@ -22,4 +22,10 @@
         <item name="itemIconTint">@android:color/white</item>
     </style>
 
+    <!-- Navigation drawer style -->
+    <style name="MenuSeparator">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#CCCCCC</item> <!-- Set your desired color -->
+    </style>
+
 </resources>

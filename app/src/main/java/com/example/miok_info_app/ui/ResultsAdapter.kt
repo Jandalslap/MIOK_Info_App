@@ -9,33 +9,36 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 // Adapter for displaying quiz results in a RecyclerView
 class ResultsAdapter(
-    private val results: List<Pair<DocumentSnapshot, Boolean>> // List of questions with result status
+    private val results: List<Pair<DocumentSnapshot, Boolean>>, // List of questions with result status (correct/incorrect)
+    private val language: String // Language for displaying results
 ) : RecyclerView.Adapter<ResultsAdapter.ResultViewHolder>() {
 
-    // Inflates the item view layout and returns the ViewHolder for each item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
+        // Inflate the item layout for the RecyclerView
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_result, parent, false)
-        return ResultViewHolder(view)
+        return ResultViewHolder(view) // Return a new ViewHolder instance
     }
 
-    // Binds data to each item view based on its position in the list
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
-        val (question, isCorrect) = results[position] // Get question and result status
-        holder.bind(question, isCorrect) // Bind data to the view holder
+        val (question, isCorrect) = results[position] // Get the question and its correctness status
+        holder.bind(question, isCorrect, language) // Bind the data to the ViewHolder
     }
 
-    // Returns the total number of items in the data set
-    override fun getItemCount(): Int = results.size
+    override fun getItemCount(): Int = results.size // Return the total number of items in the list
 
-    // ViewHolder class to hold and bind data for each result item in the list
+    // ViewHolder class to hold the view elements for each result item
     inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val questionText: TextView = itemView.findViewById(R.id.questionText) // Displays question text
-        private val resultIcon: ImageView = itemView.findViewById(R.id.resultIcon) // Icon showing result status
+        private val questionText: TextView = itemView.findViewById(R.id.questionText) // TextView for displaying the question
+        private val resultIcon: ImageView = itemView.findViewById(R.id.resultIcon) // ImageView for displaying the result icon (correct/incorrect)
 
-        // Bind function to set the question text and result icon based on correctness
-        fun bind(question: DocumentSnapshot, isCorrect: Boolean) {
-            questionText.text = question.getString("title") // Set question title
-            resultIcon.setImageResource(if (isCorrect) R.drawable.ic_quiz_correct else R.drawable.ic_quiz_incorrect) // Show correct/incorrect icon
+        // Function to bind the question and result data to the view
+        fun bind(question: DocumentSnapshot, isCorrect: Boolean, language: String) {
+            // Get the title based on the selected language
+            val titleField = if (language == "Māori") "title_mr" else "title"
+            questionText.text = question.getString(titleField) ?: "No Title" // Set question title, defaulting to "No Title" if null
+
+            // Set the appropriate icon based on whether the answer was correct or incorrect
+            resultIcon.setImageResource(if (isCorrect) R.drawable.ic_quiz_correct else R.drawable.ic_quiz_incorrect)
         }
     }
 }
