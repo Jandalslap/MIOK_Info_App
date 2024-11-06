@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +17,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import com.example.miok_info_app.ui.DisclaimerFragment
 import com.example.miok_info_app.ui.SplashFragment
+import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.firebase.FirebaseApp
 
 // MainActivity serves as the entry point and handles navigation and Firebase initialization
@@ -24,9 +26,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout // Drawer layout component for the navigation drawer
     private lateinit var navView: NavigationView // Navigation view for handling drawer menu items
 
+    // Obtain SharedViewModel instance
+    private val sharedViewModel: SharedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main) // Set the main layout for this activity
+
+        // Observe currentLanguage LiveData for updates
+        sharedViewModel.currentLanguage.observe(this) { language ->
+            // Call the function to update the navigation menu language
+            updateNavigationMenuLanguage(language)
+        }
 
         // Initialize Firebase Services
         FirebaseApp.initializeApp(this)
@@ -169,6 +180,23 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item) // Handle other menu item clicks
+        }
+    }
+
+    // Function to update navigation menu language based on the current language
+    private fun updateNavigationMenuLanguage(language: String) {
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+        when (language) {
+            "English" -> {
+                navView.menu.findItem(R.id.action_home).title = getString(R.string.nav_home)
+                navView.menu.findItem(R.id.action_call_111).title = getString(R.string.nav_call_111)
+                navView.menu.findItem(R.id.action_emergency_hotlines).title = getString(R.string.nav_emergency_hotlines)
+            }
+            "Māori" -> {
+                navView.menu.findItem(R.id.action_home).title = getString(R.string.nav_home_mr)
+                navView.menu.findItem(R.id.action_call_111).title = getString(R.string.nav_call_111_mr)
+                navView.menu.findItem(R.id.action_emergency_hotlines).title = getString(R.string.nav_emergency_hotlines_mr)
+            }
         }
     }
 
