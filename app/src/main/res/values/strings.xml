@@ -32,11 +32,11 @@
     <string name="retryQuizButton_mr">Whakamātautau Anō</string>
     <string name="nav_home">Home</string>
     <string name="nav_call_111">CALL 111</string>
-    <string name="nav_emergency_hotlines">Emergency Hotlines</string>
+    <string name="nav_emergency_hotlines">EMERGENCY HOTLINES</string>
     <string name="action_massey_university">MASSEY UNIVERSITY</string>
     <string name="action_oranga_tamariki">ORANGA TAMARIKI</string>
     <string name="nav_home_mr">Kāinga</string>
     <string name="nav_call_111_mr">WAEA 111</string>
-    <string name="nav_emergency_hotlines_mr">Rārangi Waea Ohotata</string>
+    <string name="nav_emergency_hotlines_mr">RĀRANGI WAEA OHOTATA</string>
     <string name="action_massey_university_mr">MASSEY TE WHARE\nWĀNANGA</string>
 </resources>
