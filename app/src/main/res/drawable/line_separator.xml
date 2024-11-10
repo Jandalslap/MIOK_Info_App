@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="3dp" />  <!-- Height of the line -->
+    <solid android:color="#FF0000" />  <!-- Color of the line (light gray) -->
+</shape>

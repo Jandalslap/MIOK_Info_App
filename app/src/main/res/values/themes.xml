@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MIOK_Info_App" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#004B8C</item>
+        <item name="colorPrimary">#004B8D</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -25,7 +25,7 @@
     <!-- Navigation drawer style -->
     <style name="MenuSeparator">
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">#CCCCCC</item> <!-- Set your desired color -->
+        <item name="android:background">#FF0000</item> <!-- Set your desired color -->
     </style>
 
 </resources>

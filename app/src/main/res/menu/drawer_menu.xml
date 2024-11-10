@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Home Item -->
     <item
         android:id="@+id/action_home"
@@ -21,17 +22,18 @@
     <item
         android:id="@+id/action_emergency_hotlines"
         android:title="EMERGENCY HOTLINES"
-        android:icon="@drawable/ic_browser" />
+        android:icon="@drawable/ic_emergencyhotlines" />
 
     <!-- Oranga Tamariki Item -->
     <item
         android:id="@+id/action_oranga_tamariki"
         android:title="ORANGA TAMARIKI"
-        android:icon="@drawable/ic_browser" />
+        android:icon="@drawable/ic_orangatamariki2" />
 
     <!-- Massey University Item -->
     <item
         android:id="@+id/action_massey_university"
         android:title="MASSEY UNIVERSITY"
-        android:icon="@drawable/ic_browser" />
+        android:icon="@drawable/ic_link" />
+
 </menu>
