@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
     }
 
 
-
     // Called after the view has been created
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

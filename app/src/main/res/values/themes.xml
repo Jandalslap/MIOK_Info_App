@@ -22,6 +22,10 @@
         <item name="itemIconTint">@android:color/white</item>
     </style>
 
+    <style name="TextAppearance.NavigationDrawer" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:maxLines">2</item>
+    </style>
+
     <!-- Navigation drawer style -->
     <style name="MenuSeparator">
         <item name="android:layout_height">1dp</item>
