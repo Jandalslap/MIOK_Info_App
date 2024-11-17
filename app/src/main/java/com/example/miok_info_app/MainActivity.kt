@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
+import androidx.navigation.findNavController
 import com.example.miok_info_app.ui.DisclaimerFragment
 import com.example.miok_info_app.ui.SplashFragment
 import com.example.miok_info_app.viewmodel.SharedViewModel
@@ -89,6 +90,13 @@ class MainActivity : AppCompatActivity() {
                     intent.data = Uri.parse(url)
                     startActivity(intent)
                 }
+
+                R.id.about_page -> {
+                    // Navigate to AboutFragment using NavController
+                    val navController = findNavController(R.id.nav_host_fragment)
+                    navController.navigate(R.id.aboutFragment)
+                }
+
             }
             drawerLayout.closeDrawer(GravityCompat.END) // Close the drawer after selection
             true
@@ -191,11 +199,13 @@ class MainActivity : AppCompatActivity() {
                 navView.menu.findItem(R.id.action_home).title = getString(R.string.nav_home)
                 navView.menu.findItem(R.id.action_call_111).title = getString(R.string.nav_call_111)
                 navView.menu.findItem(R.id.action_emergency_hotlines).title = getString(R.string.nav_emergency_hotlines)
+                navView.menu.findItem(R.id.about_page).title = getString(R.string.about_page)
             }
             "Māori" -> {
                 navView.menu.findItem(R.id.action_home).title = getString(R.string.nav_home_mr)
                 navView.menu.findItem(R.id.action_call_111).title = getString(R.string.nav_call_111_mr)
                 navView.menu.findItem(R.id.action_emergency_hotlines).title = getString(R.string.nav_emergency_hotlines_mr)
+                navView.menu.findItem(R.id.about_page).title = getString(R.string.about_page_mr)
             }
         }
     }

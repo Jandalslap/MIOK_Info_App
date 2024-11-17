@@ -48,4 +48,12 @@
         android:name="com.example.miok_info_app.ui.InformationFragment"
         android:label="Information Fragment" />
 
+    <!-- About fragment -->
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.miok_info_app.ui.AboutFragment"
+        android:label="AboutFragment">
+        <!-- You can add an action here if needed -->
+    </fragment>
+
 </navigation>

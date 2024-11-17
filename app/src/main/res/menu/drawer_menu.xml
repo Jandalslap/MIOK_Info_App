@@ -36,4 +36,10 @@
         android:title="MASSEY UNIVERSITY"
         android:icon="@drawable/ic_link" />
 
+    <!-- About Page -->
+    <item
+        android:id="@+id/about_page"
+        android:title="ABOUT"
+        android:icon="@drawable/ic_link" />
+
 </menu>
