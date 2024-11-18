@@ -41,4 +41,150 @@
     <string name="action_massey_university_mr">MASSEY TE WHARE\nWĀNANGA</string>
     <string name="about_page">ABOUT</string>
     <string name="about_page_mr">MŌ MĀTOU</string>
+    <string name="aboutTitle">ABOUT</string>
+    <string name="aboutTitle_mr">MŌ MĀTOU</string>
+    <string name="aboutText">Welcome to the MIOK Information App. This app was a requirement for the COMP709 Mobile Application Development Module.\nThis app aims to provide information to parents and caregivers regarding escorting and legal rights. The accompanying app is the MIOK Quick Response App designed for the safety of children at home.</string>
+    <string name="aboutText_mr">Nau mai ki te Taupānga Mōhiohio MIOK. I hangaia tēnei taupānga hei whakatutuki i te whakaritenga mō te Wāhanga Whakawhanake Taupānga Pūkoro COMP709.\nKo te whāinga o tēnei taupānga, he tuku mōhiohio ki ngā mātua me ngā kaitiaki e pā ana ki te ārahi me ngā motika ā-ture. Ko te taupānga tūhonohono ko te Taupānga Whakautu Tere MIOK i hangaia mō te haumaru o ngā tamariki i te kāinga.</string>
+    <string name="about_client">Client: </string>
+    <string name="about_client_mr">Kiritaki: </string>
+    <string name="about_client_label">AWAI Massey University</string>
+    <string name="about_client_label_mr">AWAI Whare Wānanga o Massey</string>
+    <string name="about_group">Group: </string>
+    <string name="about_group_mr">Rōpū: </string>
+    <string name="about_group_label">We as Kaitiaki Group of eight students from Wintec.</string>
+    <string name="about_group_label_mr">Ko mātou hei Rōpū Kaitiaki, e waru ngā tauira nō Wintec.</string>
+    <string name="about_app_specification">App Specifications: </string>
+    <string name="about_app_specification_mr">Ngā Whakatakanga Raranga Taupānga: </string>
+    <string name="about_app_QR">
+MIOK Quick Response app is designed to ensure the safety of children in emergencies.\n
+        \n
+    - Application ID:\n
+        com.example.miok_quick_response_app\n
+    - Target SDK: 34\n
+    - Minimum SDK: 28\n
+    - Compile SDK: 34\n
+    - Version Code: 1\n
+    - Version Name: 1.0\n
+    - Kotlin Version: 1.8.0\n
+    - Navigation Component Version: 2.7.4\n
+    - Firebase SDK: firebase-firestore-ktx\n
+    - RecyclerView Library:
+        \n
+        androidx.recyclerview:recyclerview:1.1.0\n
+    - Room Database:\n
+        androidx.room:room-ktx:2.4.2\n
+    - Google Drive API:\n
+        com.google.android.gms:play-services-drive:17.0.0\n
+    - CardView Library:\n
+        androidx.cardview:cardview:1.0.0\n
+    - ConstraintLayout Library:\n
+        androidx.constraintlayout:constraintlayout:2.1.4\n
+    - DrawerLayout Library:\n
+        androidx.drawerlayout:drawerlayout:1.1.1\n
+    - ViewBinding Enabled\n
+    - DataBinding Disabled\n
+    - Test Frameworks:\n
+        JUnit 4.13.2, Espresso 3.6.1\n
+    - Proguard Configuration:\n
+        proguard-android-optimize.txt,\n
+        proguard-rules.pro\n
+    - Kotlin &amp; Java Compatibility:\n
+        JVM Target 1.8
+    </string>
+    <string name="about_app_QR_mr">-
+Ko te taupānga MIOK Quick Response i hangaia mō te haumaru o ngā tamariki.\n
+        \n
+    - Application ID:\n
+        com.example.miok_quick_response_app\n
+    - Target SDK: 34\n
+    - Minimum SDK: 28\n
+    - Compile SDK: 34\n
+    - Version Code: 1\n
+    - Version Name: 1.0\n
+    - Kotlin Version: 1.8.0\n
+    - Navigation Component Version: 2.7.4\n
+    - Firebase SDK: firebase-firestore-ktx\n
+    - RecyclerView Library:\n
+        androidx.recyclerview:recyclerview:1.1.0\n
+    - Room Database:\n
+        androidx.room:room-ktx:2.4.2\n
+    - Google Drive API:\n
+        com.google.android.gms:play-services-drive:17.0.0\n
+    - CardView Library:\n
+        androidx.cardview:cardview:1.0.0\n
+    - ConstraintLayout Library:\n
+        androidx.constraintlayout:constraintlayout:2.1.4\n
+    - DrawerLayout Library:\n
+        androidx.drawerlayout:drawerlayout:1.1.1\n
+    - ViewBinding Enabled\n
+    - DataBinding Disabled\n
+    - Test Frameworks:\n
+        JUnit 4.13.2, Espresso 3.6.1\n
+    - Proguard Configuration:\n
+        proguard-android-optimize.txt, proguard-rules.pro\n
+    - Kotlin &amp; Java Compatibility:\n
+        JVM Target 1.8\n\n
+    </string>
+    <string name="about_app_info">
+MIOK Information App provides information to the parents and caregivers regarding escorting and legal rights.\n
+        \n
+    - Application ID:\n
+        com.example.miok_info_app\n
+    - Target SDK: 34\n
+    - Minimum SDK: 28\n
+    - Compile SDK: 34\n
+    - Version Code: 1\n
+    - Version Name: 1.0\n
+    - Kotlin Version: 1.8.0\n
+    - Navigation Component Version: 2.5.0\n
+    - Firebase SDK: firebase-firestore-ktx\n
+    - RecyclerView Library:\n
+        androidx.recyclerview:recyclerview:1.1.0\n
+    - CardView Library:\n
+        androidx.cardview:cardview:1.0.0\n
+    - ConstraintLayout Library:\n
+        androidx.constraintlayout:constraintlayout:2.1.4\n
+    - DrawerLayout Library:\n
+        androidx.drawerlayout:drawerlayout:1.1.1\n
+    - ViewBinding Enabled\n
+    - DataBinding Enabled\n
+    - Test Frameworks:\n
+        JUnit 4.13.2, Espresso 3.6.1\n
+    - Proguard Configuration:\n
+        proguard-android-optimize.txt, proguard-rules.pro\n
+    - Kotlin &amp; Java Compatibility:\n
+        JVM Target 1.8\n\n
+    </string>
+    <string name="about_app_info_mr">
+Ko te MIOK Information app e whakarato ana i ngā mōhiohio ki ngā mātua/kaitiaki e pā ana ki te āwhina me ngā tika ture.\n
+        \n
+    - Application ID:\n
+        com.example.miok_info_app\n
+    - Target SDK: 34\n
+    - Minimum SDK: 28\n
+    - Compile SDK: 34\n
+    - Version Code: 1\n
+    - Version Name: 1.0\n
+    - Kotlin Version: 1.8.0\n
+    - Navigation Component Version: 2.5.0\n
+    - Firebase SDK: firebase-firestore-ktx\n
+    - RecyclerView Library:\n
+        androidx.recyclerview:recyclerview:1.1.0\n
+    - CardView Library:\n
+        androidx.cardview:cardview:1.0.0\n
+    - ConstraintLayout Library:\n
+        androidx.constraintlayout:constraintlayout:2.1.4\n
+    - DrawerLayout Library:\n
+        androidx.drawerlayout:drawerlayout:1.1.1\n
+    - ViewBinding Enabled\n
+    - DataBinding Enabled\n
+    - Test Frameworks:\n
+        JUnit 4.13.2, Espresso 3.6.1\n
+    - Proguard Configuration:\n
+        proguard-android-optimize.txt, proguard-rules.pro\n
+    - Kotlin &amp; Java Compatibility:\n
+        JVM Target 1.8
+</string>
+
+
 </resources>

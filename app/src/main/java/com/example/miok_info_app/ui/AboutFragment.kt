@@ -8,9 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.miok_info_app.R
+import com.example.miok_info_app.databinding.FragmentAboutBinding
 import com.example.miok_info_app.viewmodel.SharedViewModel
 
-class AboutFragment : Fragment(R.layout.fragment_about) {
+class AboutFragment : Fragment() {
+
+    private var _binding: FragmentAboutBinding? = null // Backing property for safe nullability
+    private val binding get() = _binding!! // Non-nullable reference to binding
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -18,8 +22,9 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false)
+        // Inflate the layout using view binding
+        _binding = FragmentAboutBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,10 +42,30 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun updateStrings(language: String) {
-        // Update your UI based on the selected language
-        // For example, set text on TextViews according to the language:
-        // textView.text = getString(R.string.some_string_resource_name)
+    fun updateStrings(language: String) {
+        when (language) {
+            "English" -> {
+                binding.aboutTitle.text = getString(R.string.aboutTitle)
+                binding.aboutText.text = getString(R.string.aboutText)
+                binding.aboutClient.text = getString(R.string.about_client)
+                binding.aboutClientLabel.text = getString(R.string.about_client_label)
+                binding.aboutGroup.text = getString(R.string.about_group)
+                binding.aboutGroupLabel.text = getString(R.string.about_group_label)
+                binding.aboutAppSpecification.text = getString(R.string.about_app_specification)
+                binding.aboutAppQR.text = getString(R.string.about_app_QR)
+            }
+            "Māori" -> {
+                binding.aboutTitle.text = getString(R.string.aboutTitle_mr)
+                binding.aboutText.text = getString(R.string.aboutText_mr)
+                binding.aboutClient.text = getString(R.string.about_client_mr)
+                binding.aboutClientLabel.text = getString(R.string.about_client_label_mr)
+                binding.aboutGroup.text = getString(R.string.about_group_mr)
+                binding.aboutGroupLabel.text = getString(R.string.about_group_label_mr)
+                binding.aboutAppSpecification.text = getString(R.string.about_app_specification_mr)
+                binding.aboutAppQR.text = getString(R.string.about_app_QR_mr)
+            }
+        }
     }
+
 
 }
