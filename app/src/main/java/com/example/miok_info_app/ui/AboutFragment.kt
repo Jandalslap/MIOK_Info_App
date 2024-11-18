@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.miok_info_app.R
@@ -28,6 +29,12 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         sharedViewModel.currentLanguage.observe(viewLifecycleOwner) { language ->
             updateStrings(language)  // Update the UI based on the current language
         }
+
+        // Access the custom ActionBar and hide the MIOK title
+        (activity as? AppCompatActivity)?.supportActionBar?.customView?.findViewById<View>(R.id.action_bar_title)?.visibility = View.GONE
+
+        // Show the back arrow when navigating to the About fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun updateStrings(language: String) {
@@ -35,4 +42,5 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         // For example, set text on TextViews according to the language:
         // textView.text = getString(R.string.some_string_resource_name)
     }
+
 }

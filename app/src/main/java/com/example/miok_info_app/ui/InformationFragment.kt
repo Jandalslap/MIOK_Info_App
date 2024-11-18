@@ -47,6 +47,9 @@ class InformationFragment : Fragment() {
         // Access the custom ActionBar and hide the MIOK title
         (activity as? AppCompatActivity)?.supportActionBar?.customView?.findViewById<View>(R.id.action_bar_title)?.visibility = View.GONE
 
+        // Show the back arrow when navigating to the Information fragment
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         // Initialize the adapter for the RecyclerView
         adapter = DocumentAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // Set layout manager for the RecyclerView
@@ -64,11 +67,6 @@ class InformationFragment : Fragment() {
         informationViewModel.fetchDocuments(documentIds)
     }
 
-    override fun onResume() {
-        super.onResume()
-        // Show the back arrow when navigating to the Information fragment
-        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
