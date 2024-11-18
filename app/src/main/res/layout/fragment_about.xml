@@ -10,15 +10,111 @@
         android:id="@+id/aboutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About"
+        android:text="ABOUT"
+        android:textColor="@color/question_color"
         android:textSize="24sp"
-        android:textStyle="bold"/>
-
+        android:textStyle="bold"
+        android:padding="10dp"/>
     <TextView
-        android:id="@+id/aboutDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is the about section where you can describe your app or provide information about its features."
-        android:paddingTop="8dp"/>
+        android:fontFamily="sans-serif-medium"
+        android:text="Welcome to the Information App. This app is a requirement for COMP709 Application Development. This app aims to provide information to the parents/caregivers regarding escorting and legal rights. "
+        android:textColor="@color/question_color"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:layout_margin="0dp"
+        android:lineSpacingExtra="3dp"/>
+
+    <!--client -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/about_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Client: "
+            android:textColor="@color/question_color"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Massey Universuity"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/question_color"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <!--group -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/about_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Group: "
+            android:textColor="@color/question_color"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We as Kaitiaki group of eight people from Wintec."
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/question_color"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <!--App Specifications -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/about_app_specification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="App Specifications: "
+            android:textColor="@color/question_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/about_app_QR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="- Quick Response app is designed for the kids safety."
+                android:textColor="@color/question_color"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/about_app_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="- Information app is providing information to the parents/caregivers regarding escorting and legal rights."                android:textColor="@color/question_color"
+                android:paddingLeft="10dp"
+                android:textSize="16sp"/>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
