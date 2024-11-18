@@ -227,9 +227,7 @@ class QuizFragment : Fragment() {
             binding.questionText.text = title
             binding.answerContentText.text = content
 
-            // Update the progress bar
-            val currentQuestionIndex = quizViewModel.currentQuestionIndex.value ?: 0
-            updateProgressBar(currentQuestionIndex)
+
 
             enableAnswerButtons()
         }
@@ -278,20 +276,27 @@ class QuizFragment : Fragment() {
 
     // Helper function to reset UI elements for a new quiz
     private fun resetUIForNewQuiz() {
+        // Reset visibility of quiz UI elements
         binding.resultsContainer.visibility = View.GONE // Hide results
         binding.yesButton.visibility = View.VISIBLE
         binding.noButton.visibility = View.VISIBLE
         binding.questionText.visibility = View.VISIBLE
+
+        // Reset the progress bar
+        for (i in 0 until binding.progressBar.childCount) {
+            val view = binding.progressBar.getChildAt(i)
+            view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.inactive_color)) // Reset to inactive color
+        }
+
     }
+
     private fun updateProgressBar(currentQuestionIndex: Int) {
-        Log.d("QuizFragment", "Updating progress bar for question index: $currentQuestionIndex")
         for (i in 0 until binding.progressBar.childCount) {
             val view = binding.progressBar.getChildAt(i)
             view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.inactive_color)) // Inactive color
 
             if (i <= currentQuestionIndex) {
                 view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.question_color)) // Active color
-                Log.d("QuizFragment", "Progress bar updated at index $i to active color.")
             }
         }
     }
@@ -309,6 +314,10 @@ class QuizFragment : Fragment() {
         binding.feedbackText.text = feedbackMessage // Set the feedback message
         binding.feedbackText.visibility = View.VISIBLE // Make sure the feedback text is visible
         Log.d("QuizFragment", "Feedback displayed: $feedbackMessage") // Log the feedback
+
+        // Update the progress bar
+        val currentQuestionIndex = quizViewModel.currentQuestionIndex.value ?: 0
+        updateProgressBar(currentQuestionIndex)
     }
 
     // Function to navigate to the Information Fragment to view quiz questions and answers
