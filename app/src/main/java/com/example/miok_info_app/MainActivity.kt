@@ -21,7 +21,7 @@ import com.example.miok_info_app.ui.SplashFragment
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.firebase.FirebaseApp
 
-// MainActivity serves as the entry point and handles navigation and Firebase initialization
+// MainActivity serves as the entry point to the app and handles navigation and Firebase initialization
 class MainActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout // Drawer layout component for the navigation drawer
