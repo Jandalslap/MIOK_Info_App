@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+// ViewModel for sharing data and state between multiple fragments
 class SharedViewModel : ViewModel() {
     private val _currentLanguage = MutableLiveData<String>("English") // Holds the current language
     val currentLanguage: LiveData<String> get() = _currentLanguage // Publicly accessible current language

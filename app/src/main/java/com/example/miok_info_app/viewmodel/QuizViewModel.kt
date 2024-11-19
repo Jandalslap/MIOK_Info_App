@@ -1,14 +1,12 @@
 package com.example.miok_info_app.viewmodel
 
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
-import com.example.miok_info_app.R
 import com.example.miok_info_app.data.InformationRepository
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 
+// ViewModel for managing quiz-related data and sharing state with SharedViewModel
 class QuizViewModel(
     private val repository: InformationRepository,
     private val sharedViewModel: SharedViewModel

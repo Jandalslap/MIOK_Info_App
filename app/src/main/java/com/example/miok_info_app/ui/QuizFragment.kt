@@ -7,16 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.miok_info_app.R
@@ -26,7 +22,6 @@ import com.example.miok_info_app.viewmodel.QuizViewModel
 import com.example.miok_info_app.viewmodel.QuizViewModelFactory
 import com.example.miok_info_app.viewmodel.SharedViewModel
 import com.google.firebase.firestore.DocumentSnapshot
-import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 // Fragment for managing the quiz interface and logic
 class QuizFragment : Fragment() {
@@ -119,8 +114,8 @@ class QuizFragment : Fragment() {
         binding.answerContainer.visibility = View.GONE
         // Initially hide the feedback text
         binding.feedbackText.visibility = View.GONE
-
-        binding.nextButton.visibility = View.GONE // Hide the next button
+        // Hide the next button
+        binding.nextButton.visibility = View.GONE
 
         quizViewModel.currentQuestion.observe(viewLifecycleOwner, Observer { question ->
             if (question != null) {
@@ -199,18 +194,20 @@ class QuizFragment : Fragment() {
         binding.resultsMessageText.text = message // Update the message on the screen
     }
 
+    // Function to update the results adapter
     private fun updateResultsAdapter(language: String, results: List<Pair<DocumentSnapshot, Boolean>>) {
-        // Assuming that the ResultsAdapter takes care of displaying the titles in the correct language
         resultsAdapter = ResultsAdapter(results, language)
         binding.resultsRecyclerView.adapter = resultsAdapter
         resultsAdapter.notifyDataSetChanged() // Notify the adapter that the data has changed
     }
 
+    // Helper function to disable yes no buttons
     private fun disableAnswerButtons() {
         binding.yesButton.isEnabled = false
         binding.noButton.isEnabled = false
     }
 
+    // Helper function to enable yes no buttons
     private fun enableAnswerButtons() {
         binding.yesButton.isEnabled = true
         binding.noButton.isEnabled = true
@@ -226,8 +223,6 @@ class QuizFragment : Fragment() {
             // Set the title and content to the UI elements
             binding.questionText.text = title
             binding.answerContentText.text = content
-
-
 
             enableAnswerButtons()
         }
@@ -249,7 +244,7 @@ class QuizFragment : Fragment() {
         val circularProgressBar = binding.circularProgressBar
         val progressText = binding.progressText
 
-        // Assuming you have the latest correct count and total questions count from your ViewModel
+        // Get the latest correct count and total questions count
         val latestCorrectCount = quizViewModel.latestCorrectCount
         val totalQuestionsCount = quizViewModel.totalQuestionsCount.value
 
@@ -290,6 +285,7 @@ class QuizFragment : Fragment() {
 
     }
 
+    // Function to update the progress bar after each question is answered
     private fun updateProgressBar(currentQuestionIndex: Int) {
         for (i in 0 until binding.progressBar.childCount) {
             val view = binding.progressBar.getChildAt(i)
@@ -347,7 +343,7 @@ class QuizFragment : Fragment() {
         _binding = null // Set binding to null
     }
 
-    // Function change textView language
+    // Function to change language on buttons
     private fun updateStrings(language: String) {
         val context = requireContext()
         val isMaori = language == "Māori"

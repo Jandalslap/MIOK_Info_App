@@ -15,8 +15,8 @@ class InformationRepository {
         return try {
             collectionRef.document(documentId).get().await() // Fetch the document and wait for the result
         } catch (e: Exception) {
-            e.printStackTrace() // Print the stack trace in case of an exception
-            null // Return null if there's an error
+            e.printStackTrace()
+            null
         }
     }
 
@@ -25,8 +25,8 @@ class InformationRepository {
         return try {
             collectionRef.get().await() // Fetch all documents and wait for the result
         } catch (e: Exception) {
-            e.printStackTrace() // Print the stack trace in case of an exception
-            null // Return null if there's an error
+            e.printStackTrace()
+            null
         }
     }
 
@@ -41,8 +41,8 @@ class InformationRepository {
                 .await() // Wait for the result
             querySnapshot.documents // Return the list of documents
         } catch (e: Exception) {
-            e.printStackTrace() // Print the stack trace in case of an exception
-            emptyList() // Return an empty list if there's an error
+            e.printStackTrace()
+            emptyList()
         }
     }
 

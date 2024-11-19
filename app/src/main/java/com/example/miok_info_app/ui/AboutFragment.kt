@@ -11,6 +11,7 @@ import com.example.miok_info_app.R
 import com.example.miok_info_app.databinding.FragmentAboutBinding
 import com.example.miok_info_app.viewmodel.SharedViewModel
 
+// Fragment that displays an about page
 class AboutFragment : Fragment() {
 
     private var _binding: FragmentAboutBinding? = null // Backing property for safe nullability
@@ -42,6 +43,7 @@ class AboutFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    // Function to translate text
     fun updateStrings(language: String) {
         when (language) {
             "English" -> {

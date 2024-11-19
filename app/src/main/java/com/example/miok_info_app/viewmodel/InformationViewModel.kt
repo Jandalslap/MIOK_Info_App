@@ -6,6 +6,7 @@ import com.example.miok_info_app.data.Document
 import com.example.miok_info_app.data.InformationRepository
 import kotlinx.coroutines.launch
 
+// ViewModel for managing information fragment data and sharing state with SharedViewModel
 class InformationViewModel(
     private val repository: InformationRepository,
     private val sharedViewModel: SharedViewModel

@@ -141,7 +141,7 @@ class HomeFragment : Fragment() {
         _binding = null // Clear binding reference to avoid memory leaks
     }
 
-    // Function change textView language
+    // Function change language on buttons
     private fun updateStrings(language: String) {
         val context = requireContext()
         val isMaori = language == "Māori"

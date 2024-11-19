@@ -17,10 +17,12 @@ class HomeViewModel(
         }
     }
 
+    // Function to change language text
     private fun onLanguageChanged(language: String) {
         // Perform actions based on the updated language if required
     }
 
+    // LiveData to observe changes in a Firestore DocumentSnapshot, with a backing MutableLiveData for internal updates.
     private val _documentData = MutableLiveData<DocumentSnapshot?>()
     val documentData: LiveData<DocumentSnapshot?> get() = _documentData
 
@@ -34,8 +36,8 @@ class HomeViewModel(
                 _documentData.value = document
             } catch (e: Exception) {
                 // Handle any errors
-                _documentData.value = null // Set to null if an error occurs
-                e.printStackTrace() // Optionally log the error
+                _documentData.value = null
+                e.printStackTrace()
             }
         }
     }

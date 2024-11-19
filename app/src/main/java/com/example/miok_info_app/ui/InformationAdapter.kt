@@ -22,7 +22,7 @@ class InformationAdapter(private val documents: List<Document>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InformationViewHolder {
         // Inflate the item layout for each document
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_document, parent, false) // Use the layout you will create for each item
+            .inflate(R.layout.item_document, parent, false)
         return InformationViewHolder(view) // Return a new instance of InformationViewHolder
     }
 

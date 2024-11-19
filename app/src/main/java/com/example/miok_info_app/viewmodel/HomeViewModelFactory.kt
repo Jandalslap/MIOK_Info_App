@@ -4,6 +4,7 @@ import com.example.miok_info_app.data.InformationRepository
 import com.example.miok_info_app.viewmodel.HomeViewModel
 import com.example.miok_info_app.viewmodel.SharedViewModel
 
+// Factory for creating instances of HomeViewModel with required dependencies: InformationRepository and SharedViewModel
 class HomeViewModelFactory(
     private val repository: InformationRepository,
     private val sharedViewModel: SharedViewModel
