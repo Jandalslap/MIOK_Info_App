@@ -5,6 +5,7 @@ Our Client was AWAI of Massey University and we were tasked with providing two m
 The first for the saftey of children in the home at risk of domestic violence. The second, an information app for parents and caregivers for the removal or placement of at risk youth in their care.
 
 The Second Solution: MIOK Information App
+
 The MIOK Information App is the second mobile solution developed by the Kaitiaki Group as part of the collaborative project with AWAI of Massey University. This app is specifically designed to support parents and caregivers involved in the removal or placement of at-risk youth, providing them with essential information and resources during critical and often emotional circumstances.
 
 Purpose and Features
